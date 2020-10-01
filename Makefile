@@ -8,6 +8,8 @@ DIR_GUI      = ./lib/GUI
 DIR_BIN      = ./bin
 DIR_SRC      = ./src
 
+DEBUG = -D DEBUG
+DEBUG_RPI = -D USE_WIRINGPI_LIB -D RPI
 CC = gcc
 MSG = -g -O0 -Wall
 CFLAGS += $(MSG)
@@ -18,16 +20,16 @@ OBJ_O = $(patsubst %.c,${DIR_BIN}/%.o,$(notdir ${OBJ_C}))
 DEV_C = $(wildcard $(DIR_BIN)/dev_hardware_SPI.o $(DIR_BIN)/RPI_sysfs_gpio.o $(DIR_BIN)/DEV_Config.o)
 
 ${DIR_BIN}/%.o:$(DIR_SRC)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@ -I $(DIR_Config) -I $(DIR_GUI) -I $(DIR_EPD) $(DEBUG)
+	$(CC) $(CFLAGS) -c  $< -o $@ -I $(DIR_Config) -I $(DIR_GUI) -I $(DIR_EPD) $(DEBUG)
 
 ${DIR_BIN}/%.o:$(DIR_EPD)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@ -I $(DIR_Config) $(DEBUG)
+	$(CC) $(CFLAGS) -c  $< -o $@ -I $(DIR_Config) $(DEBUG)
 
 ${DIR_BIN}/%.o:$(DIR_FONTS)/%.c 
-	$(CC) $(CFLAGS) -c $< -o $@ $(DEBUG)
+	$(CC) $(CFLAGS) -c  $< -o $@ $(DEBUG)
 
 ${DIR_BIN}/%.o:$(DIR_GUI)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@ -I $(DIR_Config) $(DEBUG)
+	$(CC) $(CFLAGS) -c  $< -o $@ -I $(DIR_Config) $(DEBUG)
 
 RPI_DEV:
 	$(CC) $(CFLAGS) $(DEBUG_RPI) -c $(DIR_Config)/dev_hardware_SPI.c -o $(DIR_BIN)/dev_hardware_SPI.o $(LIB_RPI) $(DEBUG)
